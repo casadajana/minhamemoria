@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Memória</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+    background-image: url('https://mulheralemdamae.com.br/wp-content/uploads/2023/02/papel-de-parede-para-celular-feminino-rosa.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #1a202c;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+h1 { 
+    text-align: center; 
+    color: #2c3e50; 
+    margin-bottom: 15px; 
+    font-size: 32px; 
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+h2 {
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+h3 { 
+    margin-top: 25px; 
+    border-bottom: 2px solid rgba(0,0,0,0.15); 
+    padding-bottom: 5px; 
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+.box-backup {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+.box-backup p { margin: 0 0 8px 0; font-size: 14px; color: #2c3e50; font-weight: bold; }
+
+button {
+    margin: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #9C4359;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+button:hover { background-color: #85374a; }
+
+.btn-backup { background-color: #6C7380; font-size: 13px; }
+.btn-backup:hover { background-color: #595f6a; }
+
+.btn-restaurar { background-color: #A37B88; font-size: 13px; }
+.btn-restaurar:hover { background-color: #8e6874; }
+
+.btn-excluir { background-color: #A84B5B; font-size: 12px; padding: 5px 10px; }
+.btn-excluir:hover { background-color: #8f3c4a; }
+
+.btn-pagar { background-color: #9C4359; font-size: 13px; padding: 5px 10px; }
+.btn-pagar:hover { background-color: #85374a; }
+
+.btn-pago-status { background-color: #27ae60; color: white; font-size: 13px; padding: 5px 10px; }
+.btn-pago-status:hover { background-color: #219150; }
+
+.btn-historico { background-color: #7f8c8d; font-size: 12px; padding: 5px 8px; }
+.btn-historico:hover { background-color: #616a6b; }
+
+.btn-filtro { background-color: #8e44ad; font-size: 13px; margin-left: 5px; }
+.btn-filtro:hover { background-color: #732d91; }
+
+.item-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 6px 0;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    border-left: 5px solid #9C4359;
+    font-size: 15px;
+    backdrop-filter: blur(4px);
+}
+
+.item-linha.tarefa-feita { border-left-color: #2ecc71; background-color: rgba(232, 248, 245, 0.45); }
+.item-linha.tarefa-alerta { border-left-color: #f39c12; background-color: rgba(254, 249, 231, 0.45); }
+.item-linha.tarefa-atrasada { border-left-color: #A84B5B; background-color: rgba(253, 242, 242, 0.45); }
+
+.item-linha.conta-paga { border-left-color: #2ecc71; background: rgba(240, 255, 244, 0.45); }
+.item-linha.conta-alerta { border-left-color: #f1c40f; background: rgba(255, 253, 231, 0.45); }
+.item-linha.conta-atrasada { border-left-color: #A84B5B; background: rgba(253, 242, 242, 0.45); }
+
+.subgrupo-contas { margin-top: 15px; margin-bottom: 15px; }
+.subgrupo-titulo { font-size: 14px; font-weight: bold; color: #2c3e50; margin-bottom: 8px; text-transform: uppercase; text-shadow: 1px 1px 1px rgba(255,255,255,0.8); }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 450px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content h4 { margin-top: 0; color: #2c3e50; }
+
+.opcoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.item-opcao-btn {
+    text-align: left;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.item-opcao-btn:hover { background-color: #ebf5fb; border-color: #9C4359; }
+.btn-fechar-modal { background-color: #7f8c8d; width: 100%; margin-top: 10px; }
+
+input[type="text"] {
+    padding: 8px;
+    width: 80%;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.info-execucao { font-size: 12px; color: #27ae60; display: block; margin-top: 2px; }
+.painel-historico { font-size: 12px; color: #333; background: rgba(238, 242, 245, 0.8); padding: 6px 10px; border-radius: 4px; margin-top: 5px; display: none; }
+
+.tag-alerta { font-size: 11px; font-weight: bold; color: #d35400; background: #fae5d3; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+.tag-atrasada { font-size: 11px; font-weight: bold; color: #c0392b; background: #fadbd8; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Minha Memória</h1>
+
+  <div class="box-backup">
+    <p>💾 Guardar ou Recuperar Minhas Anotações</p>
+    <button class="btn-backup" onclick="fazerBackup()">💾 Baixar Cópia de Segurança</button>
+    <button class="btn-restaurar" onclick="document.getElementById('file-input').click()">📂 Carregar Cópia Guardada</button>
+    <input type="file" id="file-input" style="display: none;" onchange="restaurarBackup(event)" accept=".json">
+  </div>
+
+  <h2>Minha Vida</h2>
+
+  <h3>🔴 Não esquecer</h3>
+  <button onclick="adicionarItem('nao-esquecer')">+ Adicionar</button>
+  <div id="nao-esquecer"></div>
+
+  <h3>🛒 Compras</h3>
+  <button onclick="abrirCompras()">+ Adicionar</button>
+  <div id="compras"></div>
+
+  <h3>💰 Contas (Ordenadas por Vencimento)</h3>
+  <button onclick="adicionarConta()">+ Adicionar Conta</button>
+  <div id="contas"></div>
+
+  <h3>🏡 Minha Casa</h3>
+  <button onclick="abrirModalTarefas()">+ Adicionar Tarefa</button>
+  <button id="btn-toggle-filtro" class="btn-filtro" onclick="alternarFiltroVisualizacao()">👁️ Ocultar Concluídas</button>
+  <div id="lista-minha-casa"></div>
+</div>
+
+<div id="modal-tarefas" class="modal-overlay">
+  <div class="modal-content">
+    <h4>Escolha uma Tarefa ou Crie uma Nova</h4>
+    <div class="opcoes-lista">
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Filtros de eletrodomésticos')">Filtros de eletrodomésticos</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Higienização das máquinas')">Higienização das máquinas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Trilhos e frestas')">Trilhos e frestas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Interruptores e maçanetas')">Interruptores e maçanetas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Virar o colchão')">Virar o colchão</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Geladeira por trás')">Geladeira por trás</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Lustres e ventiladores')">Lustres e ventiladores</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Caixa d’água')">Caixa d’água</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Ralos e caixa de gordura')">Ralos e caixa de gordura</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Rodapés e portas')">Rodapés e portas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Dedetização')">Dedetização</button>
+      <button class="item-opcao-btn" style="background-color: #e8f8f5; border-color: #2ecc71; font-weight: bold;" onclick="adicionarOutraTarefa()">➕ Outra tarefa personalizada</button>
+    </div>
+    <button class="btn-fechar-modal" onclick="fecharModalTarefas()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+let itens = JSON.parse(localStorage.getItem("minhaMemoria")) || [];
+let apenasPendentes = false;
+const mesesNome = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+function obterMesAnoAtual() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+}
+
+function obterNomeMesAnoAtual() {
+    const d = new Date();
+    return mesesNome[d.getMonth()] + "/" + d.getFullYear();
+}
+
+function dataLocal() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function limparNomeConta(str) {
+    if (!str) return "Conta";
+    return str.split(" — ")[0].split(" (")[0].trim();
+}
+
+const mesAnoAtualStr = obterMesAnoAtual();
+const mesAnoNomeStr = obterNomeMesAnoAtual();
+
+/* FUNÇÃO QUE VERIFICA SE A CONTA FOI PAGA NO MÊS ATUAL (COMPATÍVEL COM TODOS OS FORMATOS) */
+function verificarPagoNoMesAtual(item) {
+    if (!item.ultimoMesPago) return false;
+    const u = String(item.ultimoMesPago).toLowerCase();
+    const atualIso = mesAnoAtualStr.toLowerCase();
+    const atualNome = mesAnoNomeStr.toLowerCase();
+    return u === atualIso || u === atualNome;
+}
+
+function alterarFrequencia(dataStr, frequencia, operacao) {
+    let d = new Date();
+    if (dataStr && dataStr.includes("-")) {
+        const p = dataStr.split("-");
+        d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    }
+
+    let sinal = (operacao === "subtrair") ? -1 : 1;
+    let freq = String(frequencia || "30 dias").toLowerCase();
+
+    if (freq.includes("30")) d.setDate(d.getDate() + (30 * sinal));
+    else if (freq.includes("40") || freq.includes("45")) d.setDate(d.getDate() + (45 * sinal));
+    else if (freq.includes("trimestral")) d.setMonth(d.getMonth() + (3 * sinal));
+    else if (freq.includes("semestral")) d.setMonth(d.getMonth() + (6 * sinal));
+    else if (freq.includes("anual")) d.setFullYear(d.getFullYear() + (1 * sinal));
+    else d.setDate(d.getDate() + (30 * sinal));
+
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
+
+    return ano + "-" + mes + "-" + dia;
+}
+
+function calcularDiferencaDias(dataStr) {
+    if (!dataStr) return 999;
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    const p = dataStr.split("-");
+    const dataAlvo = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    dataAlvo.setHours(0,0,0,0);
+
+    const diffTempo = dataAlvo - hoje;
+    return Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+}
+
+itens = itens.map(function(item) {
+    let nomeLimpo = limparNomeConta(item.nomeConta || item.texto);
+    let freq = item.frequencia || "30 dias";
+
+    let histCorrigido = Array.isArray(item.historicoPagamentos) 
+        ? item.historicoPagamentos.filter(h => h && h.mes && !String(h.mes).includes("undefined"))
+        : [];
+
+    return {
+        texto: nomeLimpo,
+        nomeConta: nomeLimpo,
+        categoria: item.categoria || "nao-esquecer",
+        resolvido: Boolean(item.resolvido),
+        ultimoMesPago: item.ultimoMesPago || null,
+        historicoPagamentos: histCorrigido,
+        tipoConta: item.tipoConta || (item.totalParcelas ? "recorrente" : "fixa"),
+        dia: item.dia || "1",
+        parcelaAtual: item.parcelaAtual ? Number(item.parcelaAtual) : 1,
+        totalParcelas: item.totalParcelas ? Number(item.totalParcelas) : null,
+        frequencia: freq,
+        dataCadastro: item.dataCadastro || dataLocal(),
+        proximaData: item.proximaData || alterarFrequencia(dataLocal(), freq, "somar"),
+        ultimaExecucao: item.ultimaExecucao || null,
+        concluidoNoCiclo: Boolean(item.concluidoNoCiclo)
+    };
+});
+
+salvar();
+
+function salvar() {
+    localStorage.setItem("minhaMemoria", JSON.stringify(itens));
+}
+
+function formatarData(data) {
+    if (!data || typeof data !== "string") return "";
+    const partes = data.split("-");
+    if (partes.length !== 3) return data;
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+function escolherFrequencia() {
+    const escolha = prompt("Com qual frequência essa tarefa deve ser feita?\n\n1 - 30 dias\n2 - 45 dias\n3 - Trimestral\n4 - Semestral\n5 - Anual");
+    if (escolha === "1") return "30 dias";
+    if (escolha === "2") return "45 dias";
+    if (escolha === "3") return "Trimestral";
+    if (escolha === "4") return "Semestral";
+    if (escolha === "5") return "Anual";
+    return null;
+}
+
+function abrirModalTarefas() { document.getElementById("modal-tarefas").style.display = "flex"; }
+function fecharModalTarefas() { document.getElementById("modal-tarefas").style.display = "none"; }
+
+function selecionarTarefaPredefinida(nomeTarefa) {
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: nomeTarefa, categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function adicionarOutraTarefa() {
+    const texto = prompt("Qual tarefa você quer adicionar?");
+    if (!texto || !texto.trim()) return;
+
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: texto.trim(), categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function alternarTarefa(indice) {
+    const tarefa = itens[indice];
+    if (!tarefa) return;
+
+    if (tarefa.concluidoNoCiclo) {
+        tarefa.concluidoNoCiclo = false;
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "subtrair");
+    } else {
+        tarefa.concluidoNoCiclo = true;
+        tarefa.ultimaExecucao = dataLocal();
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "somar");
+    }
+
+    salvar(); mostrarItens();
+}
+
+function alternarFiltroVisualizacao() {
+    apenasPendentes = !apenasPendentes;
+    document.getElementById("btn-toggle-filtro").textContent = apenasPendentes ? "👁️ Mostrar Tudo" : "👁️ Ocultar Concluídas";
+    mostrarItens();
+}
+
+function excluirItem(indice) {
+    if (confirm("Tem certeza que deseja apagar este item?")) {
+        itens.splice(indice, 1);
+        salvar(); mostrarItens();
+    }
+}
+
+function alternarHistorico(idPainel) {
+    const p = document.getElementById(idPainel);
+    if (p) {
+        p.style.display = (p.style.display === "block") ? "none" : "block";
+    }
+}
+
+function mostrarItens() {
+    document.getElementById("nao-esquecer").innerHTML = "";
+    document.getElementById("compras").innerHTML = "";
+    document.getElementById("contas").innerHTML = "";
+    document.getElementById("lista-minha-casa").innerHTML = "";
+
+    itens.forEach(function(item, indice) {
+        if (item.resolvido) return;
+
+        if (item.categoria === "tarefas") {
+            if (apenasPendentes && item.concluidoNoCiclo) return;
+
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const diasAteVencer = calcularDiferencaDias(item.proximaData);
+
+            if (item.concluidoNoCiclo) div.classList.add("tarefa-feita");
+            else if (diasAteVencer < 0) div.classList.add("tarefa-atrasada");
+            else if (diasAteVencer <= 5) div.classList.add("tarefa-alerta");
+
+            const textoSpan = document.createElement("span");
+            let conteudoTexto = "<strong>" + item.texto + "</strong> — Próxima: " + formatarData(item.proximaData);
+            
+            if (!item.concluidoNoCiclo) {
+                if (diasAteVencer < 0) conteudoTexto += "<span class='tag-atrasada'>Atrasada</span>";
+                else if (diasAteVencer <= 5) conteudoTexto += "<span class='tag-alerta'>Vence em " + (diasAteVencer === 0 ? "hoje" : diasAteVencer + " dia(s)") + "</span>";
+            }
+
+            if (item.ultimaExecucao && item.concluidoNoCiclo) {
+                conteudoTexto += "<span class='info-execucao'>Última vez feita em: " + formatarData(item.ultimaExecucao) + "</span>";
+            }
+            
+            textoSpan.innerHTML = conteudoTexto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnConcluir = document.createElement("button");
+            btnConcluir.className = item.concluidoNoCiclo ? "btn-pago-status" : "btn-pagar";
+            btnConcluir.textContent = item.concluidoNoCiclo ? "✅ Concluído" : "✓ Feito";
+            btnConcluir.onclick = function() { alternarTarefa(indice); };
+            acoes.appendChild(btnConcluir);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+            acoes.appendChild(btnExcluir);
+
+            div.appendChild(acoes);
+            document.getElementById("lista-minha-casa").appendChild(div);
+            return;
+        }
+
+        if (item.categoria === "nao-esquecer" || item.categoria === "compras") {
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const textoSpan = document.createElement("span");
+            textoSpan.textContent = item.texto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+
+            acoes.appendChild(btnExcluir);
+            div.appendChild(acoes);
+
+            const destino = document.getElementById(item.categoria);
+            if (destino) destino.appendChild(div);
+        }
+    });
+
+    mostrarContas();
+}
+
+function mostrarContas() {
+    const containerContas = document.getElementById("contas");
+    const hoje = new Date();
+    const diaAtual = hoje.getDate();
+
+    const subPendente = document.createElement("div");
+    subPendente.className = "subgrupo-contas";
+    const subPago = document.createElement("div");
+    subPago.className = "subgrupo-contas";
+
+    let qtdPendentes = 0, qtdPagas = 0;
+
+    let listaContasIndexadas = itens
+        .map((item, index) => ({ item, index }))
+        .filter(objeto => objeto.item.categoria === "contas" && !objeto.item.resolvido);
+
+    listaContasIndexadas.sort((a, b) => (Number(a.item.dia) || 0) - (Number(b.item.dia) || 0));
+
+    listaContasIndexadas.forEach(function(objeto) {
+        const item = objeto.item;
+        const indice = objeto.index;
+
+        const divBloco = document.createElement("div");
+        const div = document.createElement("div");
+        div.className = "item-linha";
+
+        const estaPagoNoMes = verificarPagoNoMesAtual(item);
+        const diaVencimento = Number(item.dia) || 1;
+
+        if (estaPagoNoMes) {
+            div.classList.add("conta-paga");
+            qtdPagas++;
+        } else {
+            qtdPendentes++;
+            if (diaAtual > diaVencimento) div.classList.add("conta-atrasada");
+            else if (diaVencimento - diaAtual <= 3) div.classList.add("conta-alerta");
+        }
+
+        let textoExibicao = "";
+        if (item.tipoConta === "fixa") {
+            textoExibicao = "Dia " + item.dia + " — " + item.nomeConta + " (Fixa)";
+        } else {
+            textoExibicao = "Dia " + item.dia + " — " + item.nomeConta + " — Parcela " + item.parcelaAtual + "/" + item.totalParcelas;
+        }
+
+        const textoSpan = document.createElement("span");
+        textoSpan.innerHTML = "<strong>" + textoExibicao + "</strong>";
+        div.appendChild(textoSpan);
+
+        const acoes = document.createElement("div");
+
+        if (item.historicoPagamentos && item.historicoPagamentos.length > 0) {
+            const btnHist = document.createElement("button");
+            btnHist.className = "btn-historico";
+            btnHist.textContent = "📜 Histórico";
+            btnHist.onclick = function() { alternarHistorico("hist-" + indice); };
+            acoes.appendChild(btnHist);
+        }
+
+        const btnPagar = document.createElement("button");
+        btnPagar.className = estaPagoNoMes ? "btn-pago-status" : "btn-pagar";
+        btnPagar.textContent = estaPagoNoMes ? "✓ Pago" : "✓ Pagar (" + obterNomeMesAnoAtual() + ")";
+        btnPagar.onclick = function() { pagarConta(indice); };
+        acoes.appendChild(btnPagar);
+
+        const btnExcluir = document.createElement("button");
+        btnExcluir.textContent = "🗑 Apagar";
+        btnExcluir.className = "btn-excluir";
+        btnExcluir.onclick = function() { excluirItem(indice); };
+        acoes.appendChild(btnExcluir);
+
+        div.appendChild(acoes);
+        divBloco.appendChild(div);
+
+        if (item.historicoPagamentos && item.historicoPagamentos.length > 0) {
+            const painel = document.createElement("div");
+            painel.id = "hist-" + indice;
+            painel.className = "painel-historico";
+            const registros = item.historicoPagamentos.slice().reverse().map(h => {
+                return h.parcela ? (h.mes + " [Parc. " + h.parcela + "]") : h.mes;
+            }).join(" | ");
+            painel.innerHTML = "📜 <strong> Histórico:</strong> " + registros;
+            divBloco.appendChild(painel);
+        }
+
+        if (estaPagoNoMes) subPago.appendChild(divBloco);
+        else subPendente.appendChild(divBloco);
+    });
+
+    if (qtdPendentes > 0) {
+        const tit = document.createElement("div");
+        tit.className = "subgrupo-titulo";
+        tit.textContent = "⏳ PENDENTES ESTE MÊS";
+        subPendente.prepend(tit);
+        containerContas.appendChild(subPendente);
+    }
+    if (qtdPagas > 0) {
+        const tit = document.createElement("div");
+        tit.className = "subgrupo-titulo";
+        tit.textContent = "✅ CONCLUÍDAS ESTE MÊS";
+        subPago.prepend(tit);
+        containerContas.appendChild(subPago);
+    }
+}
+
+function pagarConta(indice) {
+    const conta = itens[indice];
+    if (!conta) return;
+
+    if (!conta.historicoPagamentos) conta.historicoPagamentos = [];
+
+    const estaPago = verificarPagoNoMesAtual(conta);
+
+    if (estaPago) {
+        conta.ultimoMesPago = null;
+        if (conta.historicoPagamentos.length > 0) {
+            const ultimoRegistro = conta.historicoPagamentos.pop();
+            if (conta.tipoConta === "recorrente" && ultimoRegistro && ultimoRegistro.numParcela) {
+                conta.parcelaAtual = ultimoRegistro.numParcela;
+            }
+        }
+    } else {
+        let parcelaPaga = conta.parcelaAtual;
+        let rotuloParcela = conta.tipoConta === "recorrente" ? (parcelaPaga + "/" + conta.totalParcelas) : null;
+
+        conta.ultimoMesPago = obterNomeMesAnoAtual();
+        conta.historicoPagamentos.push({
+            mes: obterNomeMesAnoAtual(),
+            parcela: rotuloParcela,
+            numParcela: parcelaPaga
+        });
+
+        if (conta.tipoConta === "recorrente") {
+            if (conta.parcelaAtual < conta.totalParcelas) {
+                conta.parcelaAtual += 1;
+            } else {
+                conta.resolvido = true;
+            }
+        }
+    }
+
+    salvar();
+    mostrarItens();
+}
+
+function fazerBackup() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(itens, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "minha_memoria_backup.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+}
+
+function restaurarBackup(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        itens = JSON.parse(e.target.result);
+        salvar();
+        mostrarItens();
+    };
+    reader.readAsText(event.target.files[0]);
+}
+
+function adicionarItem(categoria) {
+    const texto = prompt("O que deseja anotar?");
+    if (texto && texto.trim()) {
+        itens.push({ texto: texto.trim(), categoria: categoria, resolvido: false });
+        salvar(); mostrarItens();
+    }
+}
+
+function abrirCompras() {
+    const container = document.getElementById("compras");
+    const inputAntigo = container.querySelector("input");
+    if (inputAntigo) inputAntigo.remove();
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Digite e aperte Enter...";
+    container.appendChild(input);
+    input.focus();
+
+    input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" && input.value.trim()) {
+            itens.push({ texto: input.value.trim(), categoria: "compras", resolvido: false });
+            salvar(); mostrarItens();
+        }
+    });
+}
+
+function adicionarConta() {
+    const tipo = prompt("Qual tipo de conta?\n\n1 - Fixa\n2 - Recorrente/Parcelada");
+    if (tipo !== "1" && tipo !== "2") return;
+
+    const nome = prompt("Nome da conta:");
+    if (!nome || !nome.trim()) return;
+
+    const dia = prompt("Dia do vencimento:");
+    if (!dia || !dia.trim()) return;
+
+    if (tipo === "1") {
+        itens.push({ nomeConta: nome, texto: nome, categoria: "contas", tipoConta: "fixa", dia: dia, resolvido: false, historicoPagamentos: [] });
+    } else {
+        const parcelas = prompt("Quantas parcelas?");
+        if (!parcelas) return;
+        itens.push({ nomeConta: nome, texto: nome, categoria: "contas", tipoConta: "recorrente", dia: dia, parcelaAtual: 1, totalParcelas: Number(parcelas), resolvido: false, historicoPagamentos: [] });
+    }
+    salvar(); mostrarItens();
+}
+
+mostrarItens();
+</script>
+
+</body>
+</html>
