@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Memória</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+    background-image: url('https://mulheralemdamae.com.br/wp-content/uploads/2023/02/papel-de-parede-para-celular-feminino-rosa.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #1a202c;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+h1 { 
+    text-align: center; 
+    color: #2c3e50; 
+    margin-bottom: 15px; 
+    font-size: 32px; 
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+h2 {
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+h3 { 
+    margin-top: 25px; 
+    border-bottom: 2px solid rgba(0,0,0,0.15); 
+    padding-bottom: 5px; 
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+.box-backup {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+.box-backup p { margin: 0 0 8px 0; font-size: 14px; color: #2c3e50; font-weight: bold; }
+
+button {
+    margin: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #9C4359;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+button:hover { background-color: #85374a; }
+
+.btn-backup { background-color: #6C7380; font-size: 13px; }
+.btn-backup:hover { background-color: #595f6a; }
+
+.btn-restaurar { background-color: #A37B88; font-size: 13px; }
+.btn-restaurar:hover { background-color: #8e6874; }
+
+.btn-excluir { background-color: #A84B5B; font-size: 12px; padding: 5px 10px; }
+.btn-excluir:hover { background-color: #8f3c4a; }
+
+.btn-pagar { background-color: #9C4359; font-size: 13px; padding: 5px 10px; }
+.btn-pagar:hover { background-color: #85374a; }
+
+.btn-pago-status { background-color: #27ae60; color: white; font-size: 13px; padding: 5px 10px; }
+.btn-pago-status:hover { background-color: #219150; }
+
+.btn-filtro { background-color: #8e44ad; font-size: 13px; margin-left: 5px; }
+.btn-filtro:hover { background-color: #732d91; }
+
+.item-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 6px 0;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    border-left: 5px solid #9C4359;
+    font-size: 15px;
+    backdrop-filter: blur(4px);
+}
+
+.item-linha.tarefa-feita { border-left-color: #2ecc71; background-color: rgba(232, 248, 245, 0.45); }
+.item-linha.tarefa-alerta { border-left-color: #f39c12; background-color: rgba(254, 249, 231, 0.45); }
+.item-linha.tarefa-atrasada { border-left-color: #A84B5B; background-color: rgba(253, 242, 242, 0.45); }
+
+.item-linha.conta-paga { border-left-color: #2ecc71; background: rgba(240, 255, 244, 0.45); }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 450px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content h4 { margin-top: 0; color: #2c3e50; }
+
+.opcoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.item-opcao-btn {
+    text-align: left;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.item-opcao-btn:hover { background-color: #ebf5fb; border-color: #9C4359; }
+.btn-fechar-modal { background-color: #7f8c8d; width: 100%; margin-top: 10px; }
+
+input[type="text"] {
+    padding: 8px;
+    width: 80%;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.info-execucao { font-size: 12px; color: #27ae60; display: block; margin-top: 2px; }
+
+.tag-alerta { font-size: 11px; font-weight: bold; color: #d35400; background: #fae5d3; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+.tag-atrasada { font-size: 11px; font-weight: bold; color: #c0392b; background: #fadbd8; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Minha Memória</h1>
+
+  <div class="box-backup">
+    <p>💾 Guardar ou Recuperar Minhas Anotações</p>
+    <button class="btn-backup" onclick="fazerBackup()">💾 Baixar Cópia de Segurança</button>
+    <button class="btn-restaurar" onclick="document.getElementById('file-input').click()">📂 Carregar Cópia Guardada</button>
+    <input type="file" id="file-input" style="display: none;" onchange="restaurarBackup(event)" accept=".json">
+  </div>
+
+  <h2>Minha Vida</h2>
+
+  <h3>🔴 Não esquecer</h3>
+  <button onclick="adicionarItem('nao-esquecer')">+ Adicionar</button>
+  <div id="nao-esquecer"></div>
+
+  <h3>🛒 Compras</h3>
+  <button onclick="adicionarItem('compras')">+ Adicionar</button>
+  <div id="compras"></div>
+
+  <h3>💰 Contas</h3>
+  <button onclick="adicionarConta()">+ Adicionar Conta</button>
+  <div id="contas"></div>
+
+  <h3>🏡 Minha Casa</h3>
+  <button onclick="abrirModalTarefas()">+ Adicionar Tarefa</button>
+  <button id="btn-toggle-filtro" class="btn-filtro" onclick="alternarFiltroVisualizacao()">👁️ Ocultar Concluídas</button>
+  <div id="lista-minha-casa"></div>
+</div>
+
+<div id="modal-tarefas" class="modal-overlay">
+  <div class="modal-content">
+    <h4>Escolha uma Tarefa ou Crie uma Nova</h4>
+    <div class="opcoes-lista">
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Filtros de eletrodomésticos')">Filtros de eletrodomésticos</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Higienização das máquinas')">Higienização das máquinas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Trilhos e frestas')">Trilhos e frestas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Interruptores e maçanetas')">Interruptores e maçanetas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Virar o colchão')">Virar o colchão</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Geladeira por trás')">Geladeira por trás</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Lustres e ventiladores')">Lustres e ventiladores</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Caixa d’água')">Caixa d’água</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Ralos e caixa de gordura')">Ralos e caixa de gordura</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Rodapés e portas')">Rodapés e portas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Dedetização')">Dedetização</button>
+      <button class="item-opcao-btn" style="background-color: #e8f8f5; border-color: #2ecc71; font-weight: bold;" onclick="adicionarOutraTarefa()">➕ Outra tarefa personalizada</button>
+    </div>
+    <button class="btn-fechar-modal" onclick="fecharModalTarefas()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+let itens = JSON.parse(localStorage.getItem("minhaMemoria")) || [];
+let apenasPendentes = false;
+
+function dataLocal() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function alterarFrequencia(dataStr, frequencia, operacao) {
+    let d = new Date();
+    if (dataStr && dataStr.includes("-")) {
+        const p = dataStr.split("-");
+        d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    }
+
+    let sinal = (operacao === "subtrair") ? -1 : 1;
+    let freq = String(frequencia || "30 dias").toLowerCase();
+
+    if (freq.includes("30")) d.setDate(d.getDate() + (30 * sinal));
+    else if (freq.includes("40") || freq.includes("45")) d.setDate(d.getDate() + (45 * sinal));
+    else if (freq.includes("trimestral")) d.setMonth(d.getMonth() + (3 * sinal));
+    else if (freq.includes("semestral")) d.setMonth(d.getMonth() + (6 * sinal));
+    else if (freq.includes("anual")) d.setFullYear(d.getFullYear() + (1 * sinal));
+    else d.setDate(d.getDate() + (30 * sinal));
+
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
+
+    return ano + "-" + mes + "-" + dia;
+}
+
+function calcularDiferencaDias(dataStr) {
+    if (!dataStr) return 999;
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    const p = dataStr.split("-");
+    const dataAlvo = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    dataAlvo.setHours(0,0,0,0);
+
+    const diffTempo = dataAlvo - hoje;
+    return Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+}
+
+function salvar() {
+    localStorage.setItem("minhaMemoria", JSON.stringify(itens));
+}
+
+function formatarData(data) {
+    if (!data || typeof data !== "string") return "";
+    const partes = data.split("-");
+    if (partes.length !== 3) return data;
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+function escolherFrequencia() {
+    const escolha = prompt("Com qual frequência essa tarefa deve ser feita?\n\n1 - 30 dias\n2 - 45 dias\n3 - Trimestral\n4 - Semestral\n5 - Anual");
+    if (escolha === "1") return "30 dias";
+    if (escolha === "2") return "45 dias";
+    if (escolha === "3") return "Trimestral";
+    if (escolha === "4") return "Semestral";
+    if (escolha === "5") return "Anual";
+    return null;
+}
+
+function abrirModalTarefas() { document.getElementById("modal-tarefas").style.display = "flex"; }
+function fecharModalTarefas() { document.getElementById("modal-tarefas").style.display = "none"; }
+
+function selecionarTarefaPredefinida(nomeTarefa) {
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: nomeTarefa, categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function adicionarOutraTarefa() {
+    const texto = prompt("Qual tarefa você quer adicionar?");
+    if (!texto || !texto.trim()) return;
+
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: texto.trim(), categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function alternarTarefa(indice) {
+    const tarefa = itens[indice];
+    if (!tarefa) return;
+
+    if (tarefa.concluidoNoCiclo) {
+        tarefa.concluidoNoCiclo = false;
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "subtrair");
+    } else {
+        tarefa.concluidoNoCiclo = true;
+        tarefa.ultimaExecucao = dataLocal();
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "somar");
+    }
+
+    salvar(); mostrarItens();
+}
+
+function alternarFiltroVisualizacao() {
+    apenasPendentes = !apenasPendentes;
+    document.getElementById("btn-toggle-filtro").textContent = apenasPendentes ? "👁️ Mostrar Tudo" : "👁️ Ocultar Concluídas";
+    mostrarItens();
+}
+
+function excluirItem(indice) {
+    if (confirm("Tem certeza que deseja apagar este item?")) {
+        itens.splice(indice, 1);
+        salvar(); mostrarItens();
+    }
+}
+
+function mostrarItens() {
+    document.getElementById("nao-esquecer").innerHTML = "";
+    document.getElementById("compras").innerHTML = "";
+    document.getElementById("contas").innerHTML = "";
+    document.getElementById("lista-minha-casa").innerHTML = "";
+
+    itens.forEach(function(item, indice) {
+        if (item.resolvido) return;
+
+        if (item.categoria === "tarefas") {
+            if (apenasPendentes && item.concluidoNoCiclo) return;
+
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const diasAteVencer = calcularDiferencaDias(item.proximaData);
+
+            if (item.concluidoNoCiclo) div.classList.add("tarefa-feita");
+            else if (diasAteVencer < 0) div.classList.add("tarefa-atrasada");
+            else if (diasAteVencer <= 5) div.classList.add("tarefa-alerta");
+
+            const textoSpan = document.createElement("span");
+            let conteudoTexto = "<strong>" + item.texto + "</strong> — Próxima: " + formatarData(item.proximaData);
+            
+            if (!item.concluidoNoCiclo) {
+                if (diasAteVencer < 0) conteudoTexto += "<span class='tag-atrasada'>Atrasada</span>";
+                else if (diasAteVencer <= 5) conteudoTexto += "<span class='tag-alerta'>Vence em " + (diasAteVencer === 0 ? "hoje" : diasAteVencer + " dia(s)") + "</span>";
+            }
+
+            if (item.ultimaExecucao && item.concluidoNoCiclo) {
+                conteudoTexto += "<span class='info-execucao'>Última vez feita em: " + formatarData(item.ultimaExecucao) + "</span>";
+            }
+            
+            textoSpan.innerHTML = conteudoTexto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnConcluir = document.createElement("button");
+            btnConcluir.className = item.concluidoNoCiclo ? "btn-pago-status" : "btn-pagar";
+            btnConcluir.textContent = item.concluidoNoCiclo ? "✅ Concluído" : "✓ Feito";
+            btnConcluir.onclick = function() { alternarTarefa(indice); };
+            acoes.appendChild(btnConcluir);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+            acoes.appendChild(btnExcluir);
+
+            div.appendChild(acoes);
+            document.getElementById("lista-minha-casa").appendChild(div);
+            return;
+        }
+
+        if (item.categoria === "contas") {
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            if (item.pago) div.classList.add("conta-paga");
+
+            let textoExibicao = item.texto || item.nomeConta || "Conta";
+            if (item.dia) textoExibicao = "Dia " + item.dia + " — " + textoExibicao;
+
+            const textoSpan = document.createElement("span");
+            textoSpan.innerHTML = "<strong>" + textoExibicao + "</strong>";
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+
+            const btnPagar = document.createElement("button");
+            btnPagar.className = item.pago ? "btn-pago-status" : "btn-pagar";
+            btnPagar.textContent = item.pago ? "✓ Pago" : "✓ Pagar";
+            btnPagar.onclick = function() { pagarConta(indice); };
+            acoes.appendChild(btnPagar);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+            acoes.appendChild(btnExcluir);
+
+            div.appendChild(acoes);
+            document.getElementById("contas").appendChild(div);
+            return;
+        }
+
+        if (item.categoria === "nao-esquecer" || item.categoria === "compras") {
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const textoSpan = document.createElement("span");
+            textoSpan.textContent = item.texto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+
+            acoes.appendChild(btnExcluir);
+            div.appendChild(acoes);
+
+            const destino = document.getElementById(item.categoria);
+            if (destino) destino.appendChild(div);
+        }
+    });
+}
+
+function pagarConta(indice) {
+    const conta = itens[indice];
+    if (!conta) return;
+    conta.pago = !conta.pago;
+    salvar();
+    mostrarItens();
+}
+
+function fazerBackup() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(itens, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "minha_memoria_backup.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+}
+
+function restaurarBackup(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        itens = JSON.parse(e.target.result);
+        salvar();
+        mostrarItens();
+    };
+    reader.readAsText(event.target.files[0]);
+}
+
+function adicionarItem(categoria) {
+    const texto = prompt("O que deseja anotar?");
+    if (texto && texto.trim()) {
+        itens.push({ texto: texto.trim(), categoria: categoria });
+        salvar(); mostrarItens();
+    }
+}
+
+function adicionarConta() {
+    const nome = prompt("Nome da conta:");
+    if (!nome || !nome.trim()) return;
+
+    const dia = prompt("Dia do vencimento (opcional):");
+
+    itens.push({ 
+        nomeConta: nome.trim(), 
+        texto: nome.trim(), 
+        categoria: "contas", 
+        dia: dia ? dia.trim() : "", 
+        pago: false 
+    });
+    
+    salvar(); mostrarItens();
+}
+
+mostrarItens();
+</script>
+
+</body>
+</html>
