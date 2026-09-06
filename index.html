@@ -1,760 +1,529 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Caderno de Receitas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Memória</title>
+    <meta name="color-scheme" content="light">
+<!-- Ícone das Três Tulipas Rosa para o Celular -->
+<link rel="icon" type="image/png" sizes="192x192" href="icone.png">
+<link rel="apple-touch-icon" href="icone.png">
+<link rel="manifest" href="manifest.json">
+<style>
+    :root {
+    color-scheme: light !important;
+}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+body {
+    background-color: #ffffff !important;
+    filter: none !important;
+}
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+    background-image: url('https://mulheralemdamae.com.br/wp-content/uploads/2023/02/papel-de-parede-para-celular-feminino-rosa.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #1a202c;
+}
 
-    <style>
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
-        
-        body { 
-            background-image: url('https://mulheralemdamae.com.br/wp-content/uploads/2024/04/papel-de-parede-rosa-e-branco.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #522d35 !important; 
-            display: flex; 
-            justify-content: center; 
-            padding: 20px 15px; 
-            min-height: 100vh;
-        }
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
 
-        .phone-container { 
-            width: 100%; 
-            max-width: 420px; 
-            padding-bottom: 30px; 
-        }
+h1 { 
+    text-align: center; 
+    color: #2c3e50; 
+    margin-bottom: 15px; 
+    font-size: 32px; 
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
 
-        .header-box { 
-            text-align: center; 
-            margin-bottom: 20px; 
-            padding: 10px 0;
-            background: none !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
+h2 {
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
 
-        .header-box h1 {
-            font-family: 'Dancing Script', cursive !important;
-            font-size: 3.2rem !important;
-            color: #ffffff !important;
-            font-weight: 700 !important;
-            line-height: 1.1;
-            text-shadow: 0 2px 6px rgba(82, 45, 53, 0.4) !important;
-        }
+h3 { 
+    margin-top: 25px; 
+    border-bottom: 2px solid rgba(0,0,0,0.15); 
+    padding-bottom: 5px; 
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
 
-        .screen { 
-            display: none; 
-        }
+.box-backup {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+.box-backup p { margin: 0 0 8px 0; font-size: 14px; color: #2c3e50; font-weight: bold; }
 
-        .screen.active { 
-            display: block; 
-        }
+button {
+    margin: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #9C4359;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
 
-        .section-title, .btn-main, .card-block {
-            width: 100% !important;
-            background-color: #6b3a44 !important;
-            color: #ffffff !important;
-            text-align: center !important;
-            padding: 14px !important;
-            border-radius: 14px !important;
-            font-size: 1.05rem !important;
-            font-weight: 600 !important;
-            margin-bottom: 15px !important;
-            box-shadow: 0 4px 12px rgba(107, 58, 68, 0.25) !important;
-            border: none !important;
-            cursor: pointer !important;
-        }
+button:hover { background-color: #85374a; }
 
-        .card-block {
-            text-align: left !important;
-            white-space: pre-wrap;
-        }
+.btn-backup { background-color: #6C7380; font-size: 13px; }
+.btn-backup:hover { background-color: #595f6a; }
 
-        .btn-back { 
-            background-color: rgba(255, 255, 255, 0.9) !important; 
-            color: #6b3a44 !important; 
-            border: 1px solid rgba(107, 58, 68, 0.3) !important; 
-            padding: 8px 14px !important; 
-            border-radius: 10px !important; 
-            cursor: pointer !important; 
-            font-weight: bold !important; 
-            margin-bottom: 15px !important; 
-        }
+.btn-restaurar { background-color: #A37B88; font-size: 13px; }
+.btn-restaurar:hover { background-color: #8e6874; }
 
-        .recipe-card { 
-            background-color: rgba(255, 255, 255, 0.92) !important; 
-            padding: 16px 18px !important; 
-            border-radius: 16px !important; 
-            margin-bottom: 14px !important; 
-            border: 1px solid rgba(255, 255, 255, 0.6) !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
-        }
+.btn-excluir { background-color: #A84B5B; font-size: 12px; padding: 5px 10px; }
+.btn-excluir:hover { background-color: #8f3c4a; }
 
-        .card-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
+.btn-pagar { background-color: #9C4359; font-size: 13px; padding: 5px 10px; }
+.btn-pagar:hover { background-color: #85374a; }
 
-        .recipe-title { 
-            font-size: 1.1rem !important; 
-            font-weight: 600 !important; 
-            cursor: pointer; 
-            color: #522d35 !important; 
-        }
+.btn-pago-status { background-color: #27ae60; color: white; font-size: 13px; padding: 5px 10px; }
+.btn-pago-status:hover { background-color: #219150; }
 
-        .btn-star { 
-            background: none !important; 
-            border: none !important; 
-            font-size: 1.3rem !important; 
-            cursor: pointer; 
-            padding: 0 4px; 
-            color: #d4a359; 
-        }
-        
-        .card-actions { 
-            margin-top: 10px; 
-            display: flex; 
-            gap: 18px; 
-        }
+.btn-filtro { background-color: #8e44ad; font-size: 13px; margin-left: 5px; }
+.btn-filtro:hover { background-color: #732d91; }
 
-        .action-link { 
-            background: none !important; 
-            border: none !important; 
-            color: #8c535d !important; 
-            font-size: 0.85rem !important; 
-            font-weight: 600 !important; 
-            cursor: pointer; 
-            text-decoration: underline !important; 
-        }
+.item-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 6px 0;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    border-left: 5px solid #9C4359;
+    font-size: 15px;
+    backdrop-filter: blur(4px);
+}
 
-        .form-group { 
-            margin-bottom: 14px; 
-        }
+.item-linha.tarefa-feita { border-left-color: #2ecc71; background-color: rgba(232, 248, 245, 0.45); }
+.item-linha.tarefa-alerta { border-left-color: #f39c12; background-color: rgba(254, 249, 231, 0.45); }
+.item-linha.tarefa-atrasada { border-left-color: #A84B5B; background-color: rgba(253, 242, 242, 0.45); }
 
-        .form-group label { 
-            display: block; 
-            font-weight: 600; 
-            margin-bottom: 6px; 
-            font-size: 0.9rem; 
-            color: #ffffff !important; 
-            text-shadow: 0 1px 3px rgba(82, 45, 53, 0.5); 
-        }
+.item-linha.conta-paga { border-left-color: #2ecc71; background: rgba(240, 255, 244, 0.45); }
 
-        .form-group select, .form-group textarea, .form-group input { 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(107, 58, 68, 0.2) !important; 
-            font-size: 0.95rem; 
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            color: #522d35 !important;
-        }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-        .search-container {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 450px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
-        .search-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(107, 58, 68, 0.2) !important;
-            font-size: 0.95rem;
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            color: #522d35 !important;
-        }
+.modal-content h4 { margin-top: 0; color: #2c3e50; }
 
-        .filter-fav-btn {
-            background-color: rgba(255, 255, 255, 0.9) !important;
-            color: #6b3a44 !important;
-            border: 1px solid rgba(107, 58, 68, 0.3) !important;
-            padding: 10px 14px !important;
-            border-radius: 12px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-            text-align: center;
-        }
+.opcoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
 
-        .filter-fav-btn.active {
-            background-color: #d4a359 !important;
-            color: #ffffff !important;
-            border-color: #d4a359 !important;
-        }
+.item-opcao-btn {
+    text-align: left;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
 
-        .backup-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
+.item-opcao-btn:hover { background-color: #ebf5fb; border-color: #9C4359; }
+.btn-fechar-modal { background-color: #7f8c8d; width: 100%; margin-top: 10px; }
 
-        .btn-backup {
-            flex: 1;
-            background-color: rgba(255, 255, 255, 0.9) !important;
-            color: #6b3a44 !important;
-            border: 1px solid rgba(107, 58, 68, 0.3) !important;
-            padding: 10px !important;
-            border-radius: 12px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-            font-size: 0.85rem !important;
-            text-align: center;
-        }
+input[type="text"] {
+    padding: 8px;
+    width: 80%;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.8);
+}
 
-        .form-group textarea { 
-            height: 140px; 
-            resize: none; 
-        }
+.info-execucao { font-size: 12px; color: #27ae60; display: block; margin-top: 2px; }
 
-        input[type="file"] { 
-            display: none; 
-        }
-
-        .file-upload-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            color: #6b3a44 !important;
-            border: 2px dashed #6b3a44 !important;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .preview-container, .recipe-gallery {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .preview-container img, .recipe-gallery img {
-            width: 100%;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .recipe-gallery img {
-            cursor: pointer;
-        }
-
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .image-modal.active {
-            display: flex;
-        }
-
-        .image-modal img {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .image-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: #ffffff;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+.tag-alerta { font-size: 11px; font-weight: bold; color: #d35400; background: #fae5d3; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+.tag-atrasada { font-size: 11px; font-weight: bold; color: #c0392b; background: #fadbd8; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+</style>
 </head>
+
 <body>
 
-    <div class="phone-container">
-        <header class="header-box">
-            <h1>Meu Caderno de Receitas</h1>
-        </header>
+<div class="container">
+  <h1>Minha Memória</h1>
 
-        <section id="screen-home" class="screen active">
-            <h2 class="section-title">Minhas Receitas</h2>
+  <div class="box-backup">
+    <p>💾 Guardar ou Recuperar Minhas Anotações</p>
+    <button class="btn-backup" onclick="fazerBackup()">💾 Baixar Cópia de Segurança</button>
+    <button class="btn-restaurar" onclick="document.getElementById('file-input').click()">📂 Carregar Cópia Guardada</button>
+    <input type="file" id="file-input" style="display: none;" onchange="restaurarBackup(event)" accept=".json">
+  </div>
+
+  <h2>Minha Vida</h2>
+
+  <h3>🔴 Não esquecer</h3>
+  <button onclick="adicionarItem('nao-esquecer')">+ Adicionar</button>
+  <div id="nao-esquecer"></div>
+
+  <h3>🛒 Compras</h3>
+  <button onclick="adicionarItem('compras')">+ Adicionar</button>
+  <div id="compras"></div>
+
+  <h3>💰 Contas</h3>
+  <button onclick="adicionarConta()">+ Adicionar Conta</button>
+  <div id="contas"></div>
+
+  <h3>🏡 Minha Casa</h3>
+  <button onclick="abrirModalTarefas()">+ Adicionar Tarefa</button>
+  <button id="btn-toggle-filtro" class="btn-filtro" onclick="alternarFiltroVisualizacao()">👁️ Ocultar Concluídas</button>
+  <div id="lista-minha-casa"></div>
+</div>
+
+<div id="modal-tarefas" class="modal-overlay">
+  <div class="modal-content">
+    <h4>Escolha uma Tarefa ou Crie uma Nova</h4>
+    <div class="opcoes-lista">
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Filtros de eletrodomésticos')">Filtros de eletrodomésticos</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Higienização das máquinas')">Higienização das máquinas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Trilhos e frestas')">Trilhos e frestas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Interruptores e maçanetas')">Interruptores e maçanetas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Virar o colchão')">Virar o colchão</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Geladeira por trás')">Geladeira por trás</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Lustres e ventiladores')">Lustres e ventiladores</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Caixa d’água')">Caixa d’água</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Ralos e caixa de gordura')">Ralos e caixa de gordura</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Rodapés e portas')">Rodapés e portas</button>
+      <button class="item-opcao-btn" onclick="selecionarTarefaPredefinida('Dedetização')">Dedetização</button>
+      <button class="item-opcao-btn" style="background-color: #e8f8f5; border-color: #2ecc71; font-weight: bold;" onclick="adicionarOutraTarefa()">➕ Outra tarefa personalizada</button>
+    </div>
+    <button class="btn-fechar-modal" onclick="fecharModalTarefas()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+let itens = JSON.parse(localStorage.getItem("minhaMemoria")) || [];
+let apenasPendentes = false;
+
+function dataLocal() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function alterarFrequencia(dataStr, frequencia, operacao) {
+    let d = new Date();
+    if (dataStr && dataStr.includes("-")) {
+        const p = dataStr.split("-");
+        d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    }
+
+    let sinal = (operacao === "subtrair") ? -1 : 1;
+    let freq = String(frequencia || "30 dias").toLowerCase();
+
+    if (freq.includes("30")) d.setDate(d.getDate() + (30 * sinal));
+    else if (freq.includes("40") || freq.includes("45")) d.setDate(d.getDate() + (45 * sinal));
+    else if (freq.includes("trimestral")) d.setMonth(d.getMonth() + (3 * sinal));
+    else if (freq.includes("semestral")) d.setMonth(d.getMonth() + (6 * sinal));
+    else if (freq.includes("anual")) d.setFullYear(d.getFullYear() + (1 * sinal));
+    else d.setDate(d.getDate() + (30 * sinal));
+
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
+
+    return ano + "-" + mes + "-" + dia;
+}
+
+function calcularDiferencaDias(dataStr) {
+    if (!dataStr) return 999;
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    const p = dataStr.split("-");
+    const dataAlvo = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    dataAlvo.setHours(0,0,0,0);
+
+    const diffTempo = dataAlvo - hoje;
+    return Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+}
+
+function salvar() {
+    localStorage.setItem("minhaMemoria", JSON.stringify(itens));
+}
+
+function formatarData(data) {
+    if (!data || typeof data !== "string") return "";
+    const partes = data.split("-");
+    if (partes.length !== 3) return data;
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+function escolherFrequencia() {
+    const escolha = prompt("Com qual frequência essa tarefa deve ser feita?\n\n1 - 30 dias\n2 - 45 dias\n3 - Trimestral\n4 - Semestral\n5 - Anual");
+    if (escolha === "1") return "30 dias";
+    if (escolha === "2") return "45 dias";
+    if (escolha === "3") return "Trimestral";
+    if (escolha === "4") return "Semestral";
+    if (escolha === "5") return "Anual";
+    return null;
+}
+
+function abrirModalTarefas() { document.getElementById("modal-tarefas").style.display = "flex"; }
+function fecharModalTarefas() { document.getElementById("modal-tarefas").style.display = "none"; }
+
+function selecionarTarefaPredefinida(nomeTarefa) {
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: nomeTarefa, categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function adicionarOutraTarefa() {
+    const texto = prompt("Qual tarefa você quer adicionar?");
+    if (!texto || !texto.trim()) return;
+
+    const frequencia = escolherFrequencia();
+    if (!frequencia) return;
+
+    itens.push({
+        texto: texto.trim(), categoria: "tarefas", resolvido: false, frequencia: frequencia,
+        dataCadastro: dataLocal(), proximaData: alterarFrequencia(dataLocal(), frequencia, "somar"),
+        ultimaExecucao: null, concluidoNoCiclo: false
+    });
+
+    salvar(); fecharModalTarefas(); mostrarItens();
+}
+
+function alternarTarefa(indice) {
+    const tarefa = itens[indice];
+    if (!tarefa) return;
+
+    if (tarefa.concluidoNoCiclo) {
+        tarefa.concluidoNoCiclo = false;
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "subtrair");
+    } else {
+        tarefa.concluidoNoCiclo = true;
+        tarefa.ultimaExecucao = dataLocal();
+        tarefa.proximaData = alterarFrequencia(tarefa.proximaData, tarefa.frequencia, "somar");
+    }
+
+    salvar(); mostrarItens();
+}
+
+function alternarFiltroVisualizacao() {
+    apenasPendentes = !apenasPendentes;
+    document.getElementById("btn-toggle-filtro").textContent = apenasPendentes ? "👁️ Mostrar Tudo" : "👁️ Ocultar Concluídas";
+    mostrarItens();
+}
+
+function excluirItem(indice) {
+    if (confirm("Tem certeza que deseja apagar este item?")) {
+        itens.splice(indice, 1);
+        salvar(); mostrarItens();
+    }
+}
+
+function mostrarItens() {
+    document.getElementById("nao-esquecer").innerHTML = "";
+    document.getElementById("compras").innerHTML = "";
+    document.getElementById("contas").innerHTML = "";
+    document.getElementById("lista-minha-casa").innerHTML = "";
+
+    itens.forEach(function(item, indice) {
+        if (item.resolvido) return;
+
+        if (item.categoria === "tarefas") {
+            if (apenasPendentes && item.concluidoNoCiclo) return;
+
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const diasAteVencer = calcularDiferencaDias(item.proximaData);
+
+            if (item.concluidoNoCiclo) div.classList.add("tarefa-feita");
+            else if (diasAteVencer < 0) div.classList.add("tarefa-atrasada");
+            else if (diasAteVencer <= 5) div.classList.add("tarefa-alerta");
+
+            const textoSpan = document.createElement("span");
+            let conteudoTexto = "<strong>" + item.texto + "</strong> — Próxima: " + formatarData(item.proximaData);
             
-            <div class="search-container">
-                <input type="text" id="search-input" class="search-input" placeholder="Pesquisar receita..." oninput="renderHome()">
-                <button type="button" id="btn-filter-fav" class="filter-fav-btn" onclick="toggleFavFilter()">★ Ver Apenas Favoritas</button>
-            </div>
-
-            <div id="recipes-list"></div>
-            <button class="btn-main" onclick="openForm()">+ ADICIONAR RECEITA</button>
-
-            <div class="backup-container">
-                <button class="btn-backup" onclick="exportBackup()">Baixar Minhas Receitas</button>
-                <label for="input-import-backup" class="btn-backup">Carregar Minhas Receitas</label>
-                <input type="file" id="input-import-backup" accept=".json" onchange="importBackup(event)">
-            </div>
-        </section>
-
-        <section id="screen-form" class="screen">
-            <button class="btn-back" onclick="showScreen('screen-home')">&larr; Voltar para a Home</button>
-            <h2 id="form-title-text" class="section-title">Nova Receita</h2>
-
-            <form id="recipe-form" onsubmit="saveRecipe(event)">
-                <input type="hidden" id="edit-id">
-
-                <div class="form-group">
-                    <label>Nome / Título da Receita *</label>
-                    <input type="text" id="input-title" required placeholder="Ex: Macarrão de uma panela">
-                </div>
-
-                <div class="form-group">
-                    <label>Categoria</label>
-                    <select id="input-category">
-                        <option value="Salgada">Salgada</option>
-                        <option value="Doce / Sobremesa">Doce / Sobremesa</option>
-                        <option value="Entrada">Entrada</option>
-                        <option value="Prato Principal">Prato Principal</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Cole o Texto da Receita (opcional)</label>
-                    <textarea id="input-full-recipe" placeholder="Cole o texto aqui..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Anexar Prints / Fotos (opcional)</label>
-                    <label for="input-images" class="file-upload-btn" id="upload-label">Anexar Prints da Receita</label>
-                    <input type="file" id="input-images" accept="image/*" multiple onchange="handleImagesSelect(event)">
-                    <div id="preview-container" class="preview-container"></div>
-                </div>
-
-                <button type="submit" class="btn-main">Salvar Receita</button>
-            </form>
-        </section>
-
-        <section id="screen-view" class="screen">
-            <button class="btn-back" onclick="showScreen('screen-home')">&larr; Voltar para a Home</button>
-            <h1 id="view-title" class="section-title"></h1>
-            <div class="card-block" id="view-content"></div>
-            <div id="view-gallery" class="recipe-gallery"></div>
-        </section>
-    </div>
-
-    <div id="image-modal" class="image-modal" onclick="closeImageModal()">
-        <span class="image-modal-close">&times;</span>
-        <img id="modal-img" src="" alt="Imagem expandida">
-    </div>
-
-    <script>
-        var db;
-        var currentCompressedImages = [];
-        var showOnlyFavs = false;
-
-        function initDB(callback) {
-            var request = indexedDB.open('RecipesAppDB', 1);
-            request.onupgradeneeded = function(e) {
-                db = e.target.result;
-                if (!db.objectStoreNames.contains('recipes')) {
-                    db.createObjectStore('recipes', { keyPath: 'id' });
-                }
-            };
-            request.onsuccess = function(e) {
-                db = e.target.result;
-                if (callback) callback();
-            };
-            request.onerror = function(e) {
-                console.error('Erro ao abrir o IndexedDB', e);
-            };
-        }
-
-        function getAllRecipes(callback) {
-            var tx = db.transaction('recipes', 'readonly');
-            var store = tx.objectStore('recipes');
-            var request = store.getAll();
-            request.onsuccess = function() {
-                callback(request.result || []);
-            };
-        }
-
-        function saveRecipeToDB(recipe, callback) {
-            var tx = db.transaction('recipes', 'readwrite');
-            var store = tx.objectStore('recipes');
-            store.put(recipe);
-            tx.oncomplete = function() {
-                if (callback) callback();
-            };
-        }
-
-        function deleteRecipeFromDB(id, callback) {
-            var tx = db.transaction('recipes', 'readwrite');
-            var store = tx.objectStore('recipes');
-            store.delete(id);
-            tx.oncomplete = function() {
-                if (callback) callback();
-            };
-        }
-
-        function clearAndSaveAllRecipes(recipesArray, callback) {
-            var tx = db.transaction('recipes', 'readwrite');
-            var store = tx.objectStore('recipes');
-            store.clear().onsuccess = function() {
-                var tx2 = db.transaction('recipes', 'readwrite');
-                var store2 = tx2.objectStore('recipes');
-                for (var i = 0; i < recipesArray.length; i++) {
-                    store2.put(recipesArray[i]);
-                }
-                tx2.oncomplete = function() {
-                    if (callback) callback();
-                };
-            };
-        }
-
-        function showScreen(screenId) {
-            var screens = document.querySelectorAll('.screen');
-            for (var i = 0; i < screens.length; i++) {
-                screens[i].classList.remove('active');
-            }
-            document.getElementById(screenId).classList.add('active');
-            if (screenId === 'screen-home') {
-                renderHome();
-            }
-        }
-
-        function toggleFavFilter() {
-            showOnlyFavs = !showOnlyFavs;
-            var btn = document.getElementById('btn-filter-fav');
-            if (showOnlyFavs) {
-                btn.classList.add('active');
-                btn.innerText = '★ Mostrando Apenas Favoritas';
-            } else {
-                btn.classList.remove('active');
-                btn.innerText = '★ Ver Apenas Favoritas';
-            }
-            renderHome();
-        }
-
-        function openForm(recipeToEdit) {
-            document.getElementById('recipe-form').reset();
-            currentCompressedImages = [];
-            document.getElementById('preview-container').innerHTML = '';
-            document.getElementById('upload-label').innerText = 'Anexar Prints da Receita';
-
-            if (recipeToEdit) {
-                document.getElementById('form-title-text').innerText = "Editar Receita";
-                document.getElementById('edit-id').value = recipeToEdit.id;
-                document.getElementById('input-title').value = recipeToEdit.title;
-                document.getElementById('input-category').value = recipeToEdit.category;
-                document.getElementById('input-full-recipe').value = recipeToEdit.content || '';
-                
-                if (recipeToEdit.images && recipeToEdit.images.length > 0) {
-                    currentCompressedImages = recipeToEdit.images.slice();
-                    renderPreviews();
-                }
-            } else {
-                document.getElementById('form-title-text').innerText = "Nova Receita";
-                document.getElementById('edit-id').value = "";
-            }
-            showScreen('screen-form');
-        }
-
-        function handleImagesSelect(event) {
-            var files = Array.prototype.slice.call(event.target.files);
-            if (!files.length) return;
-
-            var processFile = function(index) {
-                if (index >= files.length) {
-                    renderPreviews();
-                    return;
-                }
-                compressImage(files[index], function(compressed) {
-                    currentCompressedImages.push(compressed);
-                    processFile(index + 1);
-                });
-            };
-
-            processFile(0);
-        }
-
-        function compressImage(file, callback) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    var canvas = document.createElement('canvas');
-                    var width = img.width;
-                    var height = img.height;
-                    var MAX_WIDTH = 1000;
-
-                    if (width > MAX_WIDTH) {
-                        height = Math.round((height * MAX_WIDTH) / width);
-                        width = MAX_WIDTH;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    var ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/jpeg', 0.75));
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function renderPreviews() {
-            var container = document.getElementById('preview-container');
-            container.innerHTML = '';
-            for (var i = 0; i < currentCompressedImages.length; i++) {
-                var img = document.createElement('img');
-                img.src = currentCompressedImages[i];
-                container.appendChild(img);
-            }
-            document.getElementById('upload-label').innerText = currentCompressedImages.length + ' Print(s) Selecionado(s)';
-        }
-
-        function saveRecipe(event) {
-            event.preventDefault();
-            var editId = document.getElementById('edit-id').value;
-            var title = document.getElementById('input-title').value.trim();
-            var rawText = document.getElementById('input-full-recipe').value;
-
-            if (!rawText.trim() && currentCompressedImages.length === 0) {
-                alert("Por favor, cole o texto da receita ou anexe pelo menos um print.");
-                return;
+            if (!item.concluidoNoCiclo) {
+                if (diasAteVencer < 0) conteudoTexto += "<span class='tag-atrasada'>Atrasada</span>";
+                else if (diasAteVencer <= 5) conteudoTexto += "<span class='tag-alerta'>Vence em " + (diasAteVencer === 0 ? "hoje" : diasAteVencer + " dia(s)") + "</span>";
             }
 
-            var formattedText = rawText
-                .replace(/([.\w])\s*(Ingredientes:)/gi, "$1\n\nIngredientes:")
-                .replace(/([.\w])\s*(Como fazer:)/gi, "$1\n\nComo fazer:")
-                .replace(/([.\w])\s*(Modo de preparo:)/gi, "$1\n\nModo de preparo:");
-
-            getAllRecipes(function(recipes) {
-                var recipeToSave;
-                if (editId) {
-                    var numericId = Number(editId);
-                    for (var i = 0; i < recipes.length; i++) {
-                        if (recipes[i].id === numericId) {
-                            recipeToSave = recipes[i];
-                            recipeToSave.title = title;
-                            recipeToSave.category = document.getElementById('input-category').value;
-                            recipeToSave.content = formattedText;
-                            recipeToSave.images = currentCompressedImages;
-                            break;
-                        }
-                    }
-                } else {
-                    recipeToSave = {
-                        id: Date.now(),
-                        title: title,
-                        category: document.getElementById('input-category').value,
-                        isFav: false,
-                        content: formattedText,
-                        images: currentCompressedImages
-                    };
-                }
-
-                saveRecipeToDB(recipeToSave, function() {
-                    document.getElementById('recipe-form').reset();
-                    showScreen('screen-home');
-                });
-            });
-        }
-
-        function renderHome() {
-            getAllRecipes(function(recipes) {
-                var container = document.getElementById('recipes-list');
-                container.innerHTML = '';
-
-                var searchFilter = (document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase().trim() : '');
-
-                var filteredRecipes = recipes.filter(function(r) {
-                    var matchesSearch = r.title.toLowerCase().indexOf(searchFilter) !== -1;
-                    var matchesFav = showOnlyFavs ? r.isFav : true;
-                    return matchesSearch && matchesFav;
-                });
-
-                if (filteredRecipes.length === 0) {
-                    container.innerHTML = '<p style="text-align:center; padding:20px; color: #ffffff; text-shadow: 0 1px 3px rgba(82, 45, 53, 0.6); font-weight: bold;">Nenhuma receita encontrada.</p>';
-                    return;
-                }
-
-                for (var i = 0; i < filteredRecipes.length; i++) {
-                    (function(r) {
-                        var item = document.createElement('div');
-                        item.className = 'recipe-card';
-                        
-                        var starIcon = r.isFav ? '&#9733;' : '&#9734;';
-                        
-                        item.innerHTML = 
-                            '<div class="card-header">' +
-                                '<span class="recipe-title" id="title-' + r.id + '">' + r.title + '</span>' +
-                                '<button class="btn-star" title="Favoritar" id="star-' + r.id + '">' + starIcon + '</button>' +
-                            '</div>' +
-                            '<div class="card-actions">' +
-                                '<button class="action-link" id="edit-' + r.id + '">Editar</button>' +
-                                '<button class="action-link" id="delete-' + r.id + '">Excluir</button>' +
-                            '</div>';
-
-                        container.appendChild(item);
-
-                        document.getElementById('title-' + r.id).onclick = function() { viewRecipe(r.id); };
-                        document.getElementById('star-' + r.id).onclick = function() { toggleFavorite(r.id); };
-                        document.getElementById('edit-' + r.id).onclick = function() { editRecipe(r.id); };
-                        document.getElementById('delete-' + r.id).onclick = function() { deleteRecipe(r.id); };
-                    })(filteredRecipes[i]);
-                }
-            });
-        }
-
-        function toggleFavorite(id) {
-            getAllRecipes(function(recipes) {
-                for (var i = 0; i < recipes.length; i++) {
-                    if (recipes[i].id === id) {
-                        recipes[i].isFav = !recipes[i].isFav;
-                        saveRecipeToDB(recipes[i], function() {
-                            renderHome();
-                        });
-                        break;
-                    }
-                }
-            });
-        }
-
-        function editRecipe(id) {
-            getAllRecipes(function(recipes) {
-                for (var i = 0; i < recipes.length; i++) {
-                    if (recipes[i].id === id) {
-                        openForm(recipes[i]);
-                        break;
-                    }
-                }
-            });
-        }
-
-        function deleteRecipe(id) {
-            if (confirm("Deseja realmente excluir esta receita?")) {
-                deleteRecipeFromDB(id, function() {
-                    renderHome();
-                });
+            if (item.ultimaExecucao && item.concluidoNoCiclo) {
+                conteudoTexto += "<span class='info-execucao'>Última vez feita em: " + formatarData(item.ultimaExecucao) + "</span>";
             }
+            
+            textoSpan.innerHTML = conteudoTexto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnConcluir = document.createElement("button");
+            btnConcluir.className = item.concluidoNoCiclo ? "btn-pago-status" : "btn-pagar";
+            btnConcluir.textContent = item.concluidoNoCiclo ? "✅ Concluído" : "✓ Feito";
+            btnConcluir.onclick = function() { alternarTarefa(indice); };
+            acoes.appendChild(btnConcluir);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+            acoes.appendChild(btnExcluir);
+
+            div.appendChild(acoes);
+            document.getElementById("lista-minha-casa").appendChild(div);
+            return;
         }
 
-        function viewRecipe(id) {
-            getAllRecipes(function(recipes) {
-                var recipe = null;
-                for (var i = 0; i < recipes.length; i++) {
-                    if (recipes[i].id === id) {
-                        recipe = recipes[i];
-                        break;
-                    }
-                }
-                if (!recipe) return;
+        if (item.categoria === "contas") {
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            if (item.pago) div.classList.add("conta-paga");
 
-                document.getElementById('view-title').innerText = recipe.title + (recipe.isFav ? ' ★' : '');
-                
-                var contentBox = document.getElementById('view-content');
-                if (recipe.content && recipe.content.trim()) {
-                    contentBox.innerText = recipe.content;
-                    contentBox.style.display = 'block';
-                } else {
-                    contentBox.style.display = 'none';
-                }
+            let textoExibicao = item.texto || item.nomeConta || "Conta";
+            if (item.dia) textoExibicao = "Dia " + item.dia + " — " + textoExibicao;
 
-                var galleryBox = document.getElementById('view-gallery');
-                galleryBox.innerHTML = '';
-                if (recipe.images && recipe.images.length > 0) {
-                    for (var j = 0; j < recipe.images.length; j++) {
-                        (function(src) {
-                            var img = document.createElement('img');
-                            img.src = src;
-                            img.onclick = function() { openImageModal(src); };
-                            galleryBox.appendChild(img);
-                        })(recipe.images[j]);
-                    }
-                }
+            const textoSpan = document.createElement("span");
+            textoSpan.innerHTML = "<strong>" + textoExibicao + "</strong>";
+            div.appendChild(textoSpan);
 
-                showScreen('screen-view');
-            });
+            const acoes = document.createElement("div");
+
+            const btnPagar = document.createElement("button");
+            btnPagar.className = item.pago ? "btn-pago-status" : "btn-pagar";
+            btnPagar.textContent = item.pago ? "✓ Pago" : "✓ Pagar";
+            btnPagar.onclick = function() { pagarConta(indice); };
+            acoes.appendChild(btnPagar);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+            acoes.appendChild(btnExcluir);
+
+            div.appendChild(acoes);
+            document.getElementById("contas").appendChild(div);
+            return;
         }
 
-        function openImageModal(src) {
-            document.getElementById('modal-img').src = src;
-            document.getElementById('image-modal').classList.add('active');
+        if (item.categoria === "nao-esquecer" || item.categoria === "compras") {
+            const div = document.createElement("div");
+            div.className = "item-linha";
+            const textoSpan = document.createElement("span");
+            textoSpan.textContent = item.texto;
+            div.appendChild(textoSpan);
+
+            const acoes = document.createElement("div");
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "🗑 Apagar";
+            btnExcluir.className = "btn-excluir";
+            btnExcluir.onclick = function() { excluirItem(indice); };
+
+            acoes.appendChild(btnExcluir);
+            div.appendChild(acoes);
+
+            const destino = document.getElementById(item.categoria);
+            if (destino) destino.appendChild(div);
         }
+    });
+}
 
-        function closeImageModal() {
-            document.getElementById('image-modal').classList.remove('active');
-        }
+function pagarConta(indice) {
+    const conta = itens[indice];
+    if (!conta) return;
+    conta.pago = !conta.pago;
+    salvar();
+    mostrarItens();
+}
 
-        function exportBackup() {
-            getAllRecipes(function(recipes) {
-                if (recipes.length === 0) {
-                    alert("Não há receitas para baixar.");
-                    return;
-                }
-                var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(recipes, null, 2));
-                var downloadAnchor = document.createElement('a');
-                downloadAnchor.setAttribute("href", dataStr);
-                downloadAnchor.setAttribute("download", "minhas_receitas.json");
-                document.body.appendChild(downloadAnchor);
-                downloadAnchor.click();
-                downloadAnchor.remove();
-            });
-        }
+function fazerBackup() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(itens, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "minha_memoria_backup.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+}
 
-        function importBackup(event) {
-            var file = event.target.files[0];
-            if (!file) return;
+function restaurarBackup(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        itens = JSON.parse(e.target.result);
+        salvar();
+        mostrarItens();
+    };
+    reader.readAsText(event.target.files[0]);
+}
 
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    var importedData = JSON.parse(e.target.result);
-                    if (Array.isArray(importedData)) {
-                        if (confirm("Isso substituirá suas receitas atuais. Deseja continuar?")) {
-                            clearAndSaveAllRecipes(importedData, function() {
-                                renderHome();
-                                alert("Receitas carregadas com sucesso!");
-                            });
-                        }
-                    } else {
-                        alert("Arquivo inválido.");
-                    }
-                } catch (err) {
-                    alert("Erro ao ler o arquivo.");
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
+function adicionarItem(categoria) {
+    const texto = prompt("O que deseja anotar?");
+    if (texto && texto.trim()) {
+        itens.push({ texto: texto.trim(), categoria: categoria });
+        salvar(); mostrarItens();
+    }
+}
 
-        initDB(function() {
-            renderHome();
-        });
-    </script>
+function adicionarConta() {
+    const nome = prompt("Nome da conta:");
+    if (!nome || !nome.trim()) return;
+
+    const dia = prompt("Dia do vencimento (opcional):");
+
+    itens.push({ 
+        nomeConta: nome.trim(), 
+        texto: nome.trim(), 
+        categoria: "contas", 
+        dia: dia ? dia.trim() : "", 
+        pago: false 
+    });
+    
+    salvar(); mostrarItens();
+}
+
+mostrarItens();
+</script>
+
 </body>
 </html>
